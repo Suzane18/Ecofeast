@@ -1,270 +1,238 @@
-# ECOFEAST - Food Waste Reduction Platform
+# 🌱 Ecofeast
 
-A comprehensive full-stack web application that connects surplus food donors with NGOs and logistics volunteers to reduce food waste and support underprivileged communities.
+> A full-stack web platform that connects food donors, NGOs, and logistics volunteers to reduce food waste and support communities in need.
 
-## Features
+## 📖 Project Overview
 
-### Role-Based Access Control (RBAC)
-- **Admin**: Approve/reject registrations, manage users, view analytics
-- **Donor**: List surplus food, track donations, receive feedback
-- **NGO**: Browse food listings, request donations, confirm deliveries
-- **Logistics**: Manage pickups and deliveries with real-time tracking
+### Problem Statement
+Food waste remains a major global issue, while many communities still face food insecurity. The disconnect between surplus food availability and those who need it creates avoidable losses.
 
-### Core Functionality
-- Real-time food listing and browsing
-- Request approval workflow
-- Geolocation tracking with Google Maps API
-- Delivery status tracking (Pending → Approved → Assigned → Picked Up → Delivered)
-- In-app notification system with AJAX polling
-- Admin analytics dashboard with charts
-- Audit logging for all admin actions
-- Responsive design for desktop and mobile
+### Motivation
+Ecofeast was built to create a practical bridge between donors, NGOs, and logistics partners so surplus food can be redistributed efficiently and transparently.
 
-### Security Features
-- Password hashing with bcrypt
-- CSRF protection
-- Input validation (frontend + backend)
-- SQL injection protection via SQLAlchemy ORM
-- Role-based route protection
-- Secure session management
-- Environment variables for secrets
+### Solution
+The platform enables donors to list surplus food, NGOs to request available donations, and logistics volunteers to coordinate pickups and deliveries through a unified workflow.
 
-## Technology Stack
+### Key Objectives
+- Reduce food waste through timely redistribution
+- Provide a trust-based donation flow between stakeholders
+- Support role-based collaboration for donors, NGOs, logistics staff, and admins
+- Offer analytics and audit visibility for oversight
+
+## ✨ Features
+
+- 🍲 Donor dashboard to publish surplus food listings
+- 🤝 NGO portal to browse and request food donations
+- 🚚 Logistics workflow for pickup and delivery coordination
+- 🛡️ Role-based access control for admin, donor, NGO, and logistics users
+- 📍 Location-aware donation handling with Google Maps integration
+- 📊 Admin analytics and monitoring dashboard
+- 📝 Audit log tracking for important actions
+- 🔔 Notification support for donation and delivery updates
+
+## 🛠️ Tech Stack
 
 ### Frontend
-- HTML5
-- CSS3 (Responsive Flexbox/Grid)
-- Vanilla JavaScript (no frameworks)
-- Fetch API for backend communication
-- Google Maps API for geolocation
-- Chart.js for analytics visualization
+
+| Technology | Purpose |
+| --- | --- |
+| HTML5 | Page structure |
+| CSS3 | Responsive UI styling |
+| JavaScript | Interactive frontend logic |
+| Google Maps API | Location and mapping support |
+| Chart.js | Administrative charts and analytics |
 
 ### Backend
-- Python 3.x
-- Flask with modular blueprint structure
-- Flask-Login for authentication
-- Flask-SQLAlchemy ORM
-- Flask-Migrate for database migrations
-- Flask-CORS for cross-origin requests
+
+| Technology | Purpose |
+| --- | --- |
+| Python | Core application logic |
+| Flask | Web framework |
+| Flask-Login | User authentication and session management |
+| Flask-SQLAlchemy | ORM and database interaction |
+| Flask-Migrate | Database migrations |
+| Flask-CORS | Cross-origin resource handling |
 
 ### Database
-- PostgreSQL with proper indexing
-- Relational schema with foreign key constraints
-- Audit logging for compliance
 
-## Project Structure
+| Technology | Purpose |
+| --- | --- |
+| PostgreSQL | Production relational database |
+| SQLite | Local development fallback |
 
+### Tools & Libraries
+
+| Tool | Purpose |
+| --- | --- |
+| Python-dotenv | Environment variable loading |
+| bcrypt | Password hashing |
+| Jinja2 | Server-side templating |
+
+## 🏗️ System Architecture
+
+Ecofeast follows a modular Flask architecture:
+
+1. The Flask app is created through an application factory in the main app package.
+2. Blueprints handle major workflows for authentication, donor operations, NGO actions, logistics coordination, and admin management.
+3. SQLAlchemy models manage users, donations, requests, deliveries, and audit data.
+4. Templates and static assets provide the web interface, while the backend handles role-based access and business logic.
+5. The app supports both PostgreSQL and SQLite depending on the environment configuration.
+
+## 📂 Folder Structure
+
+```text
+Ecofeast/
+├─ app/
+│  ├─ blueprints/
+│  │  ├─ admin.py
+│  │  ├─ api.py
+│  │  ├─ auth.py
+│  │  ├─ donor.py
+│  │  ├─ logistics.py
+│  │  ├─ main.py
+│  │  └─ ngo.py
+│  ├─ models/
+│  ├─ static/
+│  ├─ templates/
+│  └─ __init__.py
+├─ config.py
+├─ requirements.txt
+├─ run.py
+├─ .env.example
+├─ INSTALLATION_GUIDE.md
+├─ API_REFERENCE.md
+├─ TESTING_GUIDE.md
+└─ README.md
 ```
-ecofeast/
-├── backend/
-│   ├── app/
-│   │   ├── models/          # SQLAlchemy models
-│   │   ├── blueprints/      # Route blueprints
-│   │   │   ├── auth.py      # Authentication routes
-│   │   │   ├── main.py      # Public routes
-│   │   │   ├── donor.py     # Donor routes
-│   │   │   ├── ngo.py       # NGO routes
-│   │   │   ├── logistics.py # Logistics routes
-│   │   │   ├── admin.py     # Admin routes
-│   │   │   └── api.py       # API endpoints
-│   │   ├── static/
-│   │   │   ├── css/         # Stylesheets
-│   │   │   └── js/          # JavaScript files
-│   │   └── templates/       # HTML templates
-│   ├── run.py               # Application entry point
-│   ├── config.py            # Configuration
-│   └── requirements.txt     # Python dependencies
-├── .env.example             # Environment variables template
-└── README.md               # This file
-```
 
-## Installation & Setup
+## ⚙️ Installation & Setup
 
 ### Prerequisites
-- Python 3.8+
-- PostgreSQL 12+
+
+- Python 3.10+
+- PostgreSQL (optional for production; SQLite works for local development)
+- pip
 - Git
 
-### 1. Database Setup
+### 1. Clone the repository
 
 ```bash
-# Create PostgreSQL database
-createdb ecofeast_dev
-
-# Or via PostgreSQL CLI
-psql -U postgres
-CREATE DATABASE ecofeast_dev;
+git clone https://github.com/Suzane18/Ecofeast.git
+cd Ecofeast
 ```
 
-### 2. Backend Setup
+### 2. Create a virtual environment
 
 ```bash
-# Navigate to backend directory
-cd backend
-
-# Create virtual environment
 python -m venv venv
-
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
 source venv/bin/activate
+# On Windows: venv\Scripts\activate
+```
 
-# Install dependencies
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-# Create .env file from example
+### 4. Configure environment variables
+
+Copy the example file and update the values:
+
+```bash
 cp .env.example .env
-
-# Edit .env with your configuration
-# Replace DATABASE_URL with your actual database connection
-# Replace GOOGLE_MAPS_KEY with your API key
-# Change SECRET_KEY and JWT_SECRET_KEY for production
 ```
 
-### 3. Database Migrations
+Example configuration:
 
-```bash
-# Initialize database
-python run.py
-
-# Create admin user
-python run.py create_admin
-# Follow the prompts to create your admin account
-```
-
-### 4. Run Application
-
-```bash
-# Development server
-python run.py
-
-# Application will be available at http://localhost:5000
-```
-
-## Usage
-
-### Registration Flow
-1. Visit http://localhost:5000/auth/register
-2. Select your role (Donor, NGO, or Logistics)
-3. Donors are auto-verified; NGOs and Logistics need admin approval
-4. Login at http://localhost:5000/auth/login
-
-### Workflow Example
-
-#### As a Donor:
-1. Login to dashboard
-2. Click "Create Listing" to add surplus food
-3. Pin location on map
-4. Submit for approval
-5. Wait for admin approval
-6. Receive notifications when NGOs request your food
-
-#### As an NGO:
-1. Login to dashboard
-2. Click "Browse Food" to see available donations
-3. Submit requests for needed food
-4. Wait for admin approval
-5. Confirm delivery when food arrives
-
-#### As Logistics:
-1. Login to dashboard
-2. View assigned deliveries
-3. Navigate to pickup and delivery locations
-4. Confirm pickup and delivery status
-
-#### As Admin:
-1. Login to dashboard
-2. Review pending approvals
-3. Approve or reject donations and requests
-4. Assign logistics volunteers
-5. View analytics and reports
-6. Monitor audit logs
-
-## Configuration
-
-### Environment Variables (.env)
-
-```
-FLASK_ENV=development|production|testing
-DEBUG=True|False
-SECRET_KEY=your-secret-key-here
-JWT_SECRET_KEY=your-jwt-secret-key-here
+```env
+FLASK_ENV=development
+SECRET_KEY=your_secret_key
+JWT_SECRET_KEY=your_jwt_secret
 DATABASE_URL=postgresql://user:password@localhost:5432/ecofeast_dev
-SESSION_COOKIE_SECURE=True|False
-GOOGLE_MAPS_KEY=your-google-maps-api-key
+GOOGLE_MAPS_KEY=your_google_maps_key
 ```
 
-### Database Configuration (config.py)
+### 5. Run the application
 
-Modify database URI based on your environment:
-- **Development**: SQLite or local PostgreSQL
-- **Production**: External PostgreSQL database
+```bash
+python run.py
+```
 
-## API Endpoints
+The app will be available at `http://localhost:5000`.
 
-### Authentication
-- `POST /auth/register` - User registration
-- `POST /auth/login` - User login
-- `GET /auth/logout` - User logout
-- `POST /auth/profile` - Update profile
+## 💻 Usage Guide
 
-### Donor
-- `GET /donor/dashboard` - Donor dashboard
-- `POST /donor/listing/create` - Create food listing
-- `POST /donor/listing/<id>/edit` - Edit listing
-- `POST /donor/listing/<id>/delete` - Delete listing
-- `GET /donor/listing/<id>` - View listing details
-- `POST /donor/feedback/<id>` - Submit feedback
+1. Register an account with the appropriate role: donor, NGO, logistics, or admin.
+2. Log in to the dashboard.
+3. Donors can create food listings with location details.
+4. NGOs can browse listings and request donations.
+5. Logistics users can manage delivery pickups and statuses.
+6. Admins review listings, permissions, and platform activity.
 
-### NGO
-- `GET /ngo/dashboard` - NGO dashboard
-- `GET /ngo/browse` - Browse food listings
-- `GET /ngo/listing/<id>` - View listing
-- `POST /ngo/request/create` - Create food request
-- `POST /ngo/delivery/<id>/confirm` - Confirm delivery
-- `POST /ngo/feedback/<id>` - Submit feedback
+## 🔌 API Overview
 
-### Logistics
-- `GET /logistics/dashboard` - Logistics dashboard
-- `GET /logistics/delivery/<id>` - View delivery details
-- `POST /logistics/delivery/<id>/pickup` - Confirm pickup
-- `GET /api/delivery/<id>/location` - Get delivery locations
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `/auth/register` | POST | Register a new user |
+| `/auth/login` | POST | Log in a user |
+| `/auth/logout` | GET | Log out the current user |
+| `/donor/dashboard` | GET | Donor dashboard |
+| `/ngo/browse` | GET | Browse available donations |
+| `/logistics/dashboard` | GET | Logistics dashboard |
+| `/admin/dashboard` | GET | Admin analytics dashboard |
+| `/api/notifications/unread` | GET | Get unread notifications |
+| `/api/distance` | POST | Calculate distance between locations |
 
-### Admin
-- `GET /admin/dashboard` - Admin dashboard
-- `GET /admin/users` - Manage users
-- `POST /admin/user/<id>/approve` - Approve user
-- `POST /admin/user/<id>/deactivate` - Deactivate user
-- `GET /admin/donations` - Manage donations
-- `POST /admin/donation/<id>/approve` - Approve donation
-- `POST /admin/donation/<id>/reject` - Reject donation
-- `GET /admin/requests` - Manage requests
-- `POST /admin/request/<id>/approve` - Approve request
-- `POST /admin/request/<id>/reject` - Reject request
-- `POST /admin/delivery/<id>/assign` - Assign logistics
+## 🗄️ Database Schema
 
-### API Utilities
-- `GET /api/notifications/unread` - Get unread notifications
-- `POST /api/notifications/<id>/read` - Mark as read
-- `GET /api/stats/dashboard` - Get dashboard statistics
-- `POST /api/user/location/update` - Update user location
-- `POST /api/distance` - Calculate distance
+The application uses SQLAlchemy models to manage the core entities:
 
-## Security Considerations
+- **User** — stores account details, role, and contact metadata
+- **Donation** — stores food listing details and donor association
+- **Request** — links NGOs to available donations
+- **Delivery** — tracks pickup and delivery workflow
+- **AuditLog** — records admin and platform actions for oversight
 
-### Production Deployment
-1. Change `SECRET_KEY` and `JWT_SECRET_KEY` to strong random values
-2. Set `DEBUG=False`
-3. Set `SESSION_COOKIE_SECURE=True` (requires HTTPS)
-4. Use environment-specific configurations
-5. Enable CORS only for trusted domains
-6. Implement rate limiting
-7. Add HTTPS/SSL certificates
-8. Use strong database passwords
-9. Regular security audits and updates
-10. Implement proper logging and monitoring
+## 🔒 Security Features
+
+- Password hashing using `bcrypt`
+- Role-based access control for each user type
+- Session-based authentication with Flask-Login
+- Environment-based secret configuration
+- CSRF and input validation support
+- Relational database protection with SQLAlchemy ORM
+
+## 🧪 Testing
+
+### Manual Testing
+- Register and log in as various roles
+- Create and approve food donations
+- Request donations as an NGO
+- Track delivery status changes
+- Review admin dashboard analytics
+
+### Recommended Future Testing
+- Unit tests for models and controllers
+- Integration tests for blueprint routes
+- End-to-end testing of donation workflows
+
+## 🌐 Deployment
+
+### Recommended deployment steps
+1. Set `FLASK_ENV=production`
+2. Configure a production PostgreSQL database
+3. Set strong `SECRET_KEY` and `JWT_SECRET_KEY` values
+4. Deploy the Flask app to a platform such as Render, Railway, or Heroku
+5. Configure the Google Maps API key and secure environment variables
+
+## 🔮 Future Enhancements
+
+- [ ] Add real-time chat for donors and NGOs
+- [ ] Introduce mobile-friendly push notifications
+- [ ] Add AI-based food demand forecasting
+- [ ] Improve route optimization for logistics delivery
+- [ ] Add multilingual support for wider adoption
 
 ### Password Requirements
 - Minimum 8 characters
@@ -283,8 +251,6 @@ Modify database URI based on your environment:
 - **notifications** - In-app notifications
 - **feedback** - User feedback
 - **audit_logs** - Admin action tracking
-
-## Performance Optimization
 
 ### Database Indexing
 - Indexed on `user_id`, `created_at`, `status` for fast queries
@@ -336,22 +302,6 @@ python run.py --port=5001
 - Check static files path in config.py
 - Verify CSS/JS files exist in `app/static/`
 
-## Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Test thoroughly
-4. Submit a pull request
-
-## License
-
-This project is open-source and available under the MIT License.
-
-## Contact & Support
-
-For issues, questions, or suggestions:
-- Email: info@ecofeast.com
-- GitHub Issues: [Project Repository]
 
 ## Acknowledgments
 
